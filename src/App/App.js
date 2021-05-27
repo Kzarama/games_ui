@@ -1,35 +1,52 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core'
+import React from "react";
 
-const useStyles = makeStyles((theme) => ({
+import { withStyles } from "@material-ui/core";
+// import { DataGrid } from "@material-ui/data-grid";
+
+import { GameController } from "../controller/GameController";
+
+const useStyles = (theme) => ({
   App: {
-    alignContent: 'center',
-    textAlign: 'center',
+    alignContent: "center",
+    textAlign: "center",
     fontFamily: [
-      '-apple-system',
-      'BlinkMacSystemFont',
+      "-apple-system",
+      "BlinkMacSystemFont",
       '"Segoe UI"',
-      'Roboto',
+      "Roboto",
       '"Helvetica Neue"',
-      'Arial',
-      'sans-serif',
+      "Arial",
+      "sans-serif",
       '"Apple Color Emoji"',
       '"Segoe UI Emoji"',
       '"Segoe UI Symbol"',
-    ].join(','),
+    ].join(","),
   },
   title: {
-    color: '#00CCFF'
-  }
-}));
+    color: "#00CCFF",
+  },
+});
 
-function App() {
-  const classes = useStyles();
-  return (
-    <div className={classes.App}>
-      <h1 className={classes.title}>VideoGames</h1>
-    </div>
-  );
+class App extends React.Component {
+  render() {
+    const { classes } = this.props;
+
+    const getGames = async () => {
+      console.log(await GameController.getGames()["data"]);
+      return await GameController.getGames()["data"];
+    };
+
+    // const games = getGames();
+
+    // const { data } = useSWR("/games", GameController.getGames());
+
+    return (
+      <div className={classes.App}>
+        <h1 className={classes.title}>VideoGames</h1>
+        {console.log(getGames())}
+      </div>
+    );
+  }
 }
 
-export default App;
+export default withStyles(useStyles)(App);
